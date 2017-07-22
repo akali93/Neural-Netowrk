@@ -14,15 +14,29 @@ namespace NN
         private List<List<Neuron>> Neurons { get; set; }
         private int idCounter;
         private readonly int reduction;
+        private bool isBuilt;
 
         public NeuralNetwork()
         {
             idCounter = 1;
             reduction = 4;
+            isBuilt = false;
             Neurons = new List<List<Neuron>>();
             Inputs = new List<Transmitter>();
             Outputs = new List<Receiver>();
             rnd = new Random();
+        }
+
+        public void AddInputs(ICollection<Transmitter> inputs)
+        {
+            foreach (Transmitter input in inputs)
+                AddInput(input);
+        }
+
+        public void AddOutputs(ICollection<Receiver> outputs)
+        {
+            foreach (Receiver output in outputs)
+                AddOutput(output);
         }
 
         public void AddInput(Transmitter input)
@@ -43,11 +57,12 @@ namespace NN
                 return;
             if (Outputs.Count < 1)
                 return;
+            isBuilt = true;
             Neurons.Clear();
             CreateLevel(Inputs, 0);
         }
 
-        public void CreateLevel(List<Transmitter> inputs, int levelIndex)
+        private void CreateLevel(List<Transmitter> inputs, int levelIndex)
         {
             bool lastRun = false; // Indicates if this is the last level building iteration
             int actualReduction = this.reduction;
@@ -86,9 +101,9 @@ namespace NN
             }
             // Create next level, when this level is the input
             CreateLevel(level.ToList<Transmitter>(), levelIndex + 1);
-        } 
+        }
 
-        public void Connect(Neuron n, Transmitter input)
+        private void Connect(Neuron n, Transmitter input)
         {
             n.AddInput(input, rnd.NextDouble());
             if (input is Neuron)
@@ -97,12 +112,17 @@ namespace NN
 
         public void Activate()
         {
-            if (Neurons != null)
-                if (Neurons.Count > 0)
-                    foreach (Neuron n in Neurons[0])
-                        n.AutoRecieve();
-                else
-                    throw new Exception("The Build function was not called");
+            if (!isBuilt)
+                return;
+            foreach (Neuron n in Neurons[0])
+                n.AutoRecieve();
+        }
+
+        public LearningSet GenerateLearningSet()
+        {
+            if (!isBuilt)
+                return null;
+            return new LearningSet(Inputs, Outputs);
         }
 
         public static double Normalize(double x)

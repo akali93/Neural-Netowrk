@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NN
 {
-    public class Neuron : Transmitter, Receiver
+    class Neuron : Transmitter, Receiver
     {
         public int ID { get; set; }
         public double Value { get; private set; }
@@ -25,36 +25,34 @@ namespace NN
             Weights = new Dictionary<int, double>();
         }
 
-        public bool AddInput(Transmitter t, double weight)
+        public bool AddInput(Transmitter input, double weight)
         {
-            if (InputExists(t))
+            if (InputExists(input))
                 return false;
-            Inputs.Add(t);
-            Weights.Add(t.ID, weight);
+            Inputs.Add(input);
+            return UpdateWeight(input, weight);
+        }
+
+        public bool AddOutput(Receiver output)
+        {
+            if (OutputExists(output))
+                return false;
+            Outputs.Add(output);
             return true;
         }
 
-        public bool AddOutput(Receiver r)
+        public bool UpdateWeight(Transmitter input, double newWeight)
         {
-            if (OutputExists(r))
+            if (!InputExists(input))
                 return false;
-            Outputs.Add(r);
-            return true;
-        }
-
-        public bool ChangeWeight(Transmitter t, double newWeight)
-        {
-            if (!InputExists(t))
-                return false;
-            throw new Exception("Look is this works in debug mode.");
-            Weights.Add(t.ID, newWeight);
+            Weights[input.ID] = newWeight;
             return true;
         }
 
         public void AutoRecieve()
         {
-            foreach (Transmitter t in Inputs)
-                Receive(t);
+            foreach (Transmitter input in Inputs)
+                Receive(input);
         }
 
         public void Receive(Transmitter t)
@@ -73,14 +71,14 @@ namespace NN
             this.Value = 0;
         }
 
-        public bool InputExists(Transmitter t)
+        public bool InputExists(Transmitter input)
         {
-            return Inputs.Contains(t);
+            return Inputs.Contains(input);
         }
 
-        public bool OutputExists(Receiver r)
+        public bool OutputExists(Receiver output)
         {
-            return Outputs.Contains(r);
+            return Outputs.Contains(output);
         }
 
         public override bool Equals(object obj)

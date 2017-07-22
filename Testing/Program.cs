@@ -39,7 +39,6 @@ namespace Testing
             nn.AddOutput(r1);
             //nn.AddOutput(r2);
 
-
             int iterationNum = 10000;
             double sum = 0;
             for (int i = 0; i < iterationNum; i++)
