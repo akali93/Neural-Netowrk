@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace NN
 {
+    /// <summary>
+    /// Represents the ability of an instanct to receive data.
+    /// </summary>
     internal interface Receiver : Identifiable
     {
+        /// <summary>
+        /// This method will fire when a Transmitter transmits data to this Receiver.
+        /// </summary>
+        /// <param name="t">The Transmitter that sent a value.</param>
         void Receive(Transmitter t);
     }
 }

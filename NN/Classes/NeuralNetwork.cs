@@ -40,16 +40,22 @@ namespace NN
                 AddOutput(output);
         }
 
-        public void AddInput(Input input)
+        public bool AddInput(Input input)
         {
+            if (InputExists(input))
+                return false;
             input.ID = GetID();
             Inputs.Add(input);
+            return true;
         }
 
-        public void AddOutput(Output output)
+        public bool AddOutput(Output output)
         {
+            if (OutputExists(output))
+                return false;
             output.ID = GetID();
             Outputs.Add(output);
+            return true;
         }
 
         public void Build()
@@ -130,6 +136,16 @@ namespace NN
             foreach (Input input in Inputs)
                 input.Value = ls.GivenInputs[input.ID];
             Activate();
+        }
+
+        public bool InputExists(Input input)
+        {
+            return Inputs.Contains(input);
+        }
+
+        public bool OutputExists(Output output)
+        {
+            return Outputs.Contains(output);
         }
 
         private void BuiltCheck()

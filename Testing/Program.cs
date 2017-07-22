@@ -35,8 +35,8 @@ namespace Testing
                 nn.AddInput(inputs[i]);
             }
             BaseRec r1 = new BaseRec();
-            //BaseReciever r2 = new BaseReciever();
-
+            //BaseReciever r2 = new BaseReciever
+            nn.AddOutput(r1);
             nn.AddOutput(r1);
             //nn.AddOutput(r2);
 
@@ -54,7 +54,7 @@ namespace Testing
 
             nn.Activate();
 
-            Console.WriteLine(r1.Value);
+            //Console.WriteLine(r1.Value);
 
             //sum += r1.Value;
             //Console.WriteLine(r1.Value);

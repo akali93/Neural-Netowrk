@@ -8,12 +8,29 @@ namespace NN
 {
     class Neuron : Transmitter, Receiver
     {
-        public int ID { get; set; }
-        public double Value { get; set; }
-        
+        /// <summary>
+        /// A unique ID for internal network use.
+        /// </summary>
+        public int ID { get; }
+        /// <summary>
+        /// The current value of this neuron.
+        /// </summary>
+        public double Value { get; private set; }
+        /// <summary>
+        /// The list of transmitters this neuron receives values from.
+        /// </summary>
         private List<Transmitter> Inputs { get; set; }
+        /// <summary>
+        /// The list of receivers this neuron sends values to.
+        /// </summary>
         private List<Receiver> Outputs { get; set; }
+        /// <summary>
+        /// Used to calculate and som the data received from the inputs.
+        /// </summary>
         private Dictionary<int, double> Weights { get; set; }
+        /// <summary>
+        /// Used to count how many of the inputs already sent values.
+        /// </summary>
         private int RecieveCounter;
 
         public Neuron(int id)
@@ -81,11 +98,23 @@ namespace NN
             return Outputs.Contains(output);
         }
 
-        public override bool Equals(object obj)
+        /// <summary>
+        /// Determines whether the specified Identifiable is equal to the current Identifiable.
+        /// </summary>
+        /// <param name="other">The Identifiable to compare with the current Identifiable.</param>
+        /// <returns></returns>
+        public bool Equals(Identifiable other)
         {
-            if (obj is Identifiable)
-                return ID == ((Identifiable)obj).ID;
-            return false;
+            return GetHashCode() == other.GetHashCode();
+        }
+
+        /// <summary>
+        /// Returns the hash code for the current object.
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            return ID.GetHashCode();
         }
 
         public override string ToString()
