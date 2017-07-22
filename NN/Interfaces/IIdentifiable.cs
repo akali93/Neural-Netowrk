@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NN
 {
-    public interface Identifiable : IEquatable<Identifiable>
+    public interface IIdentifiable : IEquatable<IIdentifiable>
     {
         int ID { get; }
     }

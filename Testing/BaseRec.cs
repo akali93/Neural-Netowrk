@@ -13,10 +13,5 @@ namespace Testing
         {
             Console.WriteLine(this.Value);
         }
-
-        public override string ToString()
-        {
-            return "ID: " + ID;
-        }
     }
 }

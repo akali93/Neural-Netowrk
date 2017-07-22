@@ -68,13 +68,14 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstracts\Identifiable.cs" />
     <Compile Include="Abstracts\Input.cs" />
     <Compile Include="Abstracts\Output.cs" />
     <Compile Include="Classes\LearningSet.cs" />
-    <Compile Include="Interfaces\Identifiable.cs" />
+    <Compile Include="Interfaces\IIdentifiable.cs" />
     <Compile Include="Classes\NeuralNetwork.cs" />
-    <Compile Include="Interfaces\Receiver.cs" />
-    <Compile Include="Interfaces\Transmitter.cs" />
+    <Compile Include="Interfaces\IReceiver.cs" />
+    <Compile Include="Interfaces\ITransmitter.cs" />
     <Compile Include="Classes\Neuron.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

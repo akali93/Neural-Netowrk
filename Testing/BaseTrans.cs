@@ -9,9 +9,6 @@ namespace Testing
 {
     class BaseTrans : Input
     {
-        public override string ToString()
-        {
-            return "ID: " + ID;
-        }
+
     }
 }

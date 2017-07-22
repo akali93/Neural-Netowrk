@@ -13,13 +13,11 @@ namespace NN
         private List<Input> Inputs { get; set; }
         private List<Output> Outputs { get; set; }
         private List<List<Neuron>> Neurons { get; set; }
-        private int idCounter;
         private readonly int reduction;
         private bool isBuilt;
 
         public NeuralNetwork()
         {
-            idCounter = 1;
             reduction = 4;
             isBuilt = false;
             Neurons = new List<List<Neuron>>();
@@ -44,7 +42,6 @@ namespace NN
         {
             if (InputExists(input))
                 return false;
-            input.ID = GetID();
             Inputs.Add(input);
             return true;
         }
@@ -53,7 +50,6 @@ namespace NN
         {
             if (OutputExists(output))
                 return false;
-            output.ID = GetID();
             Outputs.Add(output);
             return true;
         }
@@ -66,10 +62,10 @@ namespace NN
                 return;
             isBuilt = true;
             Neurons.Clear();
-            CreateLevel(Inputs.ToList<Transmitter>(), 0);
+            CreateLevel(Inputs.ToList<ITransmitter>(), 0);
         }
 
-        private void CreateLevel(List<Transmitter> inputs, int levelIndex)
+        private void CreateLevel(List<ITransmitter> inputs, int levelIndex)
         {
             bool lastLevel = false; // Indicates if this is the last level building iteration
             int actualReduction = reduction;
@@ -88,7 +84,7 @@ namespace NN
             // For each neuron
             for (int i = 0; i < neurCount; i++)
             {
-                Neuron neuron = new Neuron(GetID());
+                Neuron neuron = new Neuron();
                 // Connect inputs
                 for (int j = 0; (j < actualReduction) && (inputIndex < inputs.Count); j++)
                     Connect(neuron, inputs[inputIndex++]);
@@ -107,10 +103,10 @@ namespace NN
                 return;
             }
             // Create next level, when this level is the input
-            CreateLevel(level.ToList<Transmitter>(), levelIndex + 1);
+            CreateLevel(level.ToList<ITransmitter>(), levelIndex + 1);
         }
 
-        private void Connect(Neuron n, Transmitter input)
+        private void Connect(Neuron n, ITransmitter input)
         {
             n.AddInput(input, rnd.NextDouble());
             if (input is Neuron)
@@ -160,25 +156,6 @@ namespace NN
         public static double Normalize(double x)
         {
             return 1 / (1 + Math.Pow(Math.E, -x));
-        }
-
-        /*
-        public void Connect()
-        {
-            Neuron n1 = GetRandomNeuron();
-            Neuron n2 = GetRandomNeuron();
-            Connect(n1, n2);
-        }
-        
-        private Neuron GetRandomNeuron()
-        {
-            int index = rnd.Next(Neurons.Count);
-            return Neurons[index];
-        }*/
-
-        private int GetID()
-        {
-            return idCounter++;
         }
     }
 }

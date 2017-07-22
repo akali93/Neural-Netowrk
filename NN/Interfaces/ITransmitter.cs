@@ -9,7 +9,7 @@ namespace NN
     /// <summary>
     /// Represents the ability of an instanct to transmit data.
     /// </summary>
-    internal interface Transmitter : Identifiable
+    internal interface ITransmitter : IIdentifiable
     {
         /// <summary>
         /// The value this instance will transmit.

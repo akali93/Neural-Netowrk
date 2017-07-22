@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace NN
 {
-    class Neuron : Transmitter, Receiver
+    class Neuron : Identifiable, ITransmitter, IReceiver
     {
-        /// <summary>
-        /// A unique ID for internal network use.
-        /// </summary>
-        public int ID { get; }
         /// <summary>
         /// The current value of this neuron.
         /// </summary>
@@ -19,11 +15,11 @@ namespace NN
         /// <summary>
         /// The list of transmitters this neuron receives values from.
         /// </summary>
-        private List<Transmitter> Inputs { get; set; }
+        private List<ITransmitter> Inputs { get; set; }
         /// <summary>
         /// The list of receivers this neuron sends values to.
         /// </summary>
-        private List<Receiver> Outputs { get; set; }
+        private List<IReceiver> Outputs { get; set; }
         /// <summary>
         /// Used to calculate and som the data received from the inputs.
         /// </summary>
@@ -33,16 +29,15 @@ namespace NN
         /// </summary>
         private int RecieveCounter;
 
-        public Neuron(int id)
+        public Neuron()
         {
-            ID = id;
             RecieveCounter = 0;
-            Inputs = new List<Transmitter>();
-            Outputs = new List<Receiver>();
+            Inputs = new List<ITransmitter>();
+            Outputs = new List<IReceiver>();
             Weights = new Dictionary<int, double>();
         }
 
-        public bool AddInput(Transmitter input, double weight)
+        public bool AddInput(ITransmitter input, double weight)
         {
             if (InputExists(input))
                 return false;
@@ -50,7 +45,7 @@ namespace NN
             return UpdateWeight(input, weight);
         }
 
-        public bool AddOutput(Receiver output)
+        public bool AddOutput(IReceiver output)
         {
             if (OutputExists(output))
                 return false;
@@ -58,7 +53,7 @@ namespace NN
             return true;
         }
 
-        public bool UpdateWeight(Transmitter input, double newWeight)
+        public bool UpdateWeight(ITransmitter input, double newWeight)
         {
             if (!InputExists(input))
                 return false;
@@ -68,11 +63,11 @@ namespace NN
 
         public void AutoRecieve()
         {
-            foreach (Transmitter input in Inputs)
+            foreach (ITransmitter input in Inputs)
                 Receive(input);
         }
 
-        public void Receive(Transmitter t)
+        public void Receive(ITransmitter t)
         {
             RecieveCounter++;
             Value += t.Value * Weights[t.ID];
@@ -83,43 +78,20 @@ namespace NN
         public void Transmit()
         {
             RecieveCounter = 0;
-            foreach (Receiver output in Outputs)
+            foreach (IReceiver output in Outputs)
                 output.Receive(this);
             this.Value = 0;
         }
 
-        public bool InputExists(Transmitter input)
+        public bool InputExists(ITransmitter input)
         {
             return Inputs.Contains(input);
         }
 
-        public bool OutputExists(Receiver output)
+        public bool OutputExists(IReceiver output)
         {
             return Outputs.Contains(output);
         }
 
-        /// <summary>
-        /// Determines whether the specified Identifiable is equal to the current Identifiable.
-        /// </summary>
-        /// <param name="other">The Identifiable to compare with the current Identifiable.</param>
-        /// <returns></returns>
-        public bool Equals(Identifiable other)
-        {
-            return GetHashCode() == other.GetHashCode();
-        }
-
-        /// <summary>
-        /// Returns the hash code for the current object.
-        /// </summary>
-        /// <returns></returns>
-        public override int GetHashCode()
-        {
-            return ID.GetHashCode();
-        }
-
-        public override string ToString()
-        {
-            return "ID: " + ID + ", Value: " + Value;
-        }
     }
 }
