@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace NN
 {
     public class NeuralNetwork
     {
         Random rnd;
-        private List<Transmitter> Inputs { get; set; }
-        private List<Receiver> Outputs { get; set; }
+        private List<Input> Inputs { get; set; }
+        private List<Output> Outputs { get; set; }
         private List<List<Neuron>> Neurons { get; set; }
         private int idCounter;
         private readonly int reduction;
@@ -22,30 +23,30 @@ namespace NN
             reduction = 4;
             isBuilt = false;
             Neurons = new List<List<Neuron>>();
-            Inputs = new List<Transmitter>();
-            Outputs = new List<Receiver>();
+            Inputs = new List<Input>();
+            Outputs = new List<Output>();
             rnd = new Random();
         }
 
-        public void AddInputs(ICollection<Transmitter> inputs)
+        public void AddInputs(ICollection<Input> inputs)
         {
-            foreach (Transmitter input in inputs)
+            foreach (Input input in inputs)
                 AddInput(input);
         }
 
-        public void AddOutputs(ICollection<Receiver> outputs)
+        public void AddOutputs(ICollection<Output> outputs)
         {
-            foreach (Receiver output in outputs)
+            foreach (Output output in outputs)
                 AddOutput(output);
         }
 
-        public void AddInput(Transmitter input)
+        public void AddInput(Input input)
         {
             input.ID = GetID();
             Inputs.Add(input);
         }
 
-        public void AddOutput(Receiver output)
+        public void AddOutput(Output output)
         {
             output.ID = GetID();
             Outputs.Add(output);
@@ -59,13 +60,13 @@ namespace NN
                 return;
             isBuilt = true;
             Neurons.Clear();
-            CreateLevel(Inputs, 0);
+            CreateLevel(Inputs.ToList<Transmitter>(), 0);
         }
 
         private void CreateLevel(List<Transmitter> inputs, int levelIndex)
         {
-            bool lastRun = false; // Indicates if this is the last level building iteration
-            int actualReduction = this.reduction;
+            bool lastLevel = false; // Indicates if this is the last level building iteration
+            int actualReduction = reduction;
             // Calculate number of neurons for this level
             int neurCount = (int)Math.Ceiling((double)inputs.Count / actualReduction);
             if (neurCount <= Outputs.Count)
@@ -74,7 +75,7 @@ namespace NN
                 while (neurCount < Outputs.Count)
                     neurCount++;
                 actualReduction = (int)Math.Floor((double)inputs.Count / neurCount);
-                lastRun = true;
+                lastLevel = true;
             }
             List<Neuron> level = new List<Neuron>();
             int inputIndex = 0;
@@ -92,7 +93,7 @@ namespace NN
                 Connect(level[0], inputs[inputIndex++]);
             // Save level
             Neurons.Add(level);
-            if (lastRun)
+            if (lastLevel)
             {
                 // Connect last level neurons to outputs
                 for (int i = 0; i < level.Count; i++)
@@ -112,17 +113,32 @@ namespace NN
 
         public void Activate()
         {
-            if (!isBuilt)
-                return;
+            BuiltCheck();
             foreach (Neuron n in Neurons[0])
                 n.AutoRecieve();
         }
 
         public LearningSet GenerateLearningSet()
         {
-            if (!isBuilt)
-                return null;
+            BuiltCheck();
             return new LearningSet(Inputs, Outputs);
+        }
+
+        public void Practice(LearningSet ls)
+        {
+            BuiltCheck();
+            foreach (Input input in Inputs)
+                input.Value = ls.GivenInputs[input.ID];
+            Activate();
+        }
+
+        private void BuiltCheck()
+        {
+            if (isBuilt)
+                return;
+            StackTrace trance = new StackTrace();
+            string method = trance.GetFrame(1).GetMethod().Name;
+            throw new MethodAccessException("The method '" + method + "' can be accessed only after the 'Build' method was called.");
         }
 
         public static double Normalize(double x)

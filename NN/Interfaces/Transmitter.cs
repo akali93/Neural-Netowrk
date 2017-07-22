@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NN
 {
-    public interface Transmitter : Identifiable
+    internal interface Transmitter : Identifiable
     {
         double Value { get; }
     }

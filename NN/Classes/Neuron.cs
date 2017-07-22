@@ -9,7 +9,7 @@ namespace NN
     class Neuron : Transmitter, Receiver
     {
         public int ID { get; set; }
-        public double Value { get; private set; }
+        public double Value { get; set; }
         
         private List<Transmitter> Inputs { get; set; }
         private List<Receiver> Outputs { get; set; }

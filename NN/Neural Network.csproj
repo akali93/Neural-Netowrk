@@ -68,6 +68,9 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstracts\Input.cs" />
+    <Compile Include="Abstracts\Output.cs" />
+    <Compile Include="Classes\LearningSet.cs" />
     <Compile Include="Interfaces\Identifiable.cs" />
     <Compile Include="Classes\NeuralNetwork.cs" />
     <Compile Include="Interfaces\Receiver.cs" />

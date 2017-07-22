@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace NN
 {
-    class BaseTrans : Input
+    public abstract class Input : Transmitter
     {
-        public override string ToString()
-        {
-            return "ID: " + ID;
-        }
+        public int ID { get; internal set; }
+
+        public double Value { get; set; }
     }
 }

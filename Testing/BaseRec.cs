@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 
 namespace NN
 {
-    class BaseRec : Receiver
+    class BaseRec : Output
     {
-        public int ID { get; set; }
-        public double Value { get; set; }
-
-        public void Receive(Transmitter t)
+        public override void Receive()
         {
-            //Console.WriteLine(t.Value);
-            this.Value = t.Value;
+            Console.WriteLine(this.Value);
+        }
+
+        public override string ToString()
+        {
+            return "ID: " + ID;
         }
     }
 }

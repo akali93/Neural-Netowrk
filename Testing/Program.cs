@@ -31,6 +31,7 @@ namespace Testing
             for (int i = 0; i < inputSize; i++)
             {
                 inputs[i] = new BaseTrans();
+                inputs[i].Value = r.Next(100);
                 nn.AddInput(inputs[i]);
             }
             BaseRec r1 = new BaseRec();
@@ -39,21 +40,27 @@ namespace Testing
             nn.AddOutput(r1);
             //nn.AddOutput(r2);
 
-            int iterationNum = 10000;
-            double sum = 0;
-            for (int i = 0; i < iterationNum; i++)
-            {
-                nn.Build();
-                foreach (BaseTrans input in inputs)
-                {
-                    input.Value = r.Next(100);
-                }
-                nn.Activate();
-                sum += r1.Value;
-                //Console.WriteLine(r1.Value);
-            }
+            //int iterationNum = 10000;
+            //double sum = 0
+            nn.Build();
 
-            Console.WriteLine(sum / iterationNum);
+            LearningSet ls = nn.GenerateLearningSet();
+
+            foreach (BaseTrans input in inputs)
+                ls.GiveInput(input, r.Next(100));
+            ls.ExpectOutput(r1, 100);
+
+            nn.Practice(ls);
+
+            nn.Activate();
+
+            Console.WriteLine(r1.Value);
+
+            //sum += r1.Value;
+            //Console.WriteLine(r1.Value);
+
+
+            //Console.WriteLine(sum / iterationNum);
 
             //Design.End();
         }

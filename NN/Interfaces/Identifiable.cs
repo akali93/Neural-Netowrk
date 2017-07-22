@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace NN
 {
-    public interface Identifiable
+    internal interface Identifiable
     {
-        int ID { get; set; }
+        int ID { get; }
     }
 }

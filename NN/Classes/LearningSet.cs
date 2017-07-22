@@ -8,18 +8,20 @@ namespace NN
 {
     public class LearningSet
     {
-        private Dictionary<int, double> GivenInputs { get; set; }
-        private Dictionary<int, double> ExpectedOutputs { get; set; }
+        internal Dictionary<int, double> GivenInputs { get; set; }
+        internal Dictionary<int, double> ExpectedOutputs { get; set; }
 
-        public LearningSet(ICollection<Transmitter> inputs, ICollection<Receiver> outputs)
+        internal LearningSet(ICollection<Input> inputs, ICollection<Output> outputs)
         {
-            foreach (Transmitter input in inputs)
+            GivenInputs = new Dictionary<int, double>();
+            ExpectedOutputs = new Dictionary<int, double>();
+            foreach (Input input in inputs)
                 GivenInputs.Add(input.ID, 0);
-            foreach (Receiver output in outputs)
+            foreach (Output output in outputs)
                 ExpectedOutputs.Add(output.ID, 0);
         }
 
-        public bool GiveInput(Transmitter input, double value)
+        public bool GiveInput(Input input, double value)
         {
             if (!GivenInputs.ContainsKey(input.ID))
                 return false;
@@ -27,12 +29,13 @@ namespace NN
             return true;
         }
 
-        public bool ExpectOutput(Receiver output, double value)
+        public bool ExpectOutput(Output output, double value)
         {
             if (!ExpectedOutputs.ContainsKey(output.ID))
                 return false;
             ExpectedOutputs[output.ID] = value;
             return true;
         }
+
     }
 }
