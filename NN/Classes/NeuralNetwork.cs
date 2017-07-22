@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NN
 {
-    class NeuralNetwork
+    public class NeuralNetwork
     {
         Random rnd;
         private List<Transmitter> Inputs { get; set; }

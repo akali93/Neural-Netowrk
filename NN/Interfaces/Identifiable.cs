@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace NN
 {
-    class BaseTrans : Transmitter
+    public interface Identifiable
     {
-        public int ID { get; set; }
-
-        public double Value { get; set; }
+        int ID { get; set; }
     }
 }

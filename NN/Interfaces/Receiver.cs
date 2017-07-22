@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NN
 {
-    interface Receiver : Identifiable
+    public interface Receiver : Identifiable
     {
         void Receive(Transmitter t);
     }

@@ -6,7 +6,7 @@
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{3740A282-2BA9-427F-8A76-3A163657762F}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NN</RootNamespace>
     <AssemblyName>Neural Network</AssemblyName>
@@ -56,25 +56,23 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Icon.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Handy">
-      <HintPath>..\..\..\..\Visual Studio 2015\Projects\Handy\Handy\bin\Debug\Handy.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseRec.cs" />
-    <Compile Include="BaseTrans.cs" />
-    <Compile Include="Identifiable.cs" />
-    <Compile Include="NeuralNetwork.cs" />
-    <Compile Include="Receiver.cs" />
-    <Compile Include="Transmitter.cs" />
-    <Compile Include="Neuron.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Interfaces\Identifiable.cs" />
+    <Compile Include="Classes\NeuralNetwork.cs" />
+    <Compile Include="Interfaces\Receiver.cs" />
+    <Compile Include="Interfaces\Transmitter.cs" />
+    <Compile Include="Classes\Neuron.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -98,9 +96,6 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

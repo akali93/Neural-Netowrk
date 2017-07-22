@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace NN
 {
-    class Neuron : Transmitter, Receiver
+    public class Neuron : Transmitter, Receiver
     {
         public int ID { get; set; }
         public double Value { get; private set; }
-
+        
         private List<Transmitter> Inputs { get; set; }
         private List<Receiver> Outputs { get; set; }
         private Dictionary<int, double> Weights { get; set; }
