@@ -1,0 +1,8 @@
+C:\Dropbox\Asaf\Documents\Visual Studio 2015\Projects\Neural Nework\NN\bin\Debug\Neural Network.exe.config
+C:\Dropbox\Asaf\Documents\Visual Studio 2015\Projects\Neural Nework\NN\bin\Debug\Neural Network.exe
+C:\Dropbox\Asaf\Documents\Visual Studio 2015\Projects\Neural Nework\NN\bin\Debug\Neural Network.pdb
+C:\Dropbox\Asaf\Documents\Visual Studio 2015\Projects\Neural Nework\NN\bin\Debug\Handy.dll
+C:\Dropbox\Asaf\Documents\Visual Studio 2015\Projects\Neural Nework\NN\bin\Debug\Handy.pdb
+C:\Dropbox\Asaf\Documents\Visual Studio 2015\Projects\Neural Nework\NN\obj\Debug\Neural Network.csprojResolveAssemblyReference.cache
+C:\Dropbox\Asaf\Documents\Visual Studio 2015\Projects\Neural Nework\NN\obj\Debug\Neural Network.exe
+C:\Dropbox\Asaf\Documents\Visual Studio 2015\Projects\Neural Nework\NN\obj\Debug\Neural Network.pdb
